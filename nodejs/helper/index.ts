@@ -3,5 +3,5 @@ import Color from './color'
 
 export {
     Logger,
-    Color
+    Color,
 }
