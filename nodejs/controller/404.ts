@@ -4,7 +4,7 @@ import { Responser } from '..'
 
 class NotFound {
 
-    notFound(req: Request, res: Response) {
+    default(req: Request, res: Response) {
         Responser.bad('Page not found', res, 404)
     }
 

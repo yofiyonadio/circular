@@ -4,7 +4,7 @@ import { Responser } from '..'
 
 class Home {
 
-    index(req: Request, res: Response) {
+    welcome(req: Request, res: Response) {
 
         Responser.good('Circular Test Server is Running, Enjoy :)', res)
     }
