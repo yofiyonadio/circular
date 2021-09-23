@@ -16,8 +16,8 @@ class Database {
 
     async init() {
         await this.pool()
-            .then(async client => {
-                client.connect((error, client) => {
+            .then(async clients => {
+                clients.connect((error, client) => {
                     if (error) {
                         throw 'Database Connection Error!'
                     }
@@ -30,8 +30,8 @@ class Database {
     async client(query: string) {
         return new Promise((resolve, reject) => {
             this.pool()
-                .then(client => {
-                    client.connect(async (error, client) => {
+                .then(clients => {
+                    clients.connect(async (error, client) => {
                         if (error) {
                             reject(error)
                         }

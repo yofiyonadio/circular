@@ -1,7 +1,7 @@
 import express from 'express'
 import { config } from 'dotenv'
 
-import { Routes, Database, Logger, Color } from '.'
+import { Routes, Database, Logger, Color, Oauth2 } from '.'
 
 config()
 
@@ -10,9 +10,9 @@ const port = process.env.APP_PORT
 
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
-app.use(express.static(__dirname + '/public'));
+app.use(express.static(__dirname + '/public'))
 
-
+Oauth2.passport(app)
 Routes.route(app)
 
 app.listen(port, async () => {
