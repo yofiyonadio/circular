@@ -1,4 +1,3 @@
-
 import { Express } from 'express'
 
 import { Route } from '.'
