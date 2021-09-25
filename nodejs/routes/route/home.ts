@@ -6,7 +6,6 @@ import { Logger } from '../..'
 
 class Home extends Routing {
     welcome(app: Express, path: string) {
-        Logger.log('this running...')
         this.routing(app, path).get(Controller.Home.welcome)
         this.routing(app, path).post(Controller.Home.welcome)
         this.routing(app, path).put(Controller.Home.welcome)

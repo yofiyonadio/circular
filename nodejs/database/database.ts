@@ -15,16 +15,21 @@ class Database {
     }
 
     async init() {
-        await this.pool()
-            .then(async clients => {
-                clients.connect((error, client) => {
-                    if (error) {
-                        throw 'Database Connection Error!'
-                    }
-                    client.release()
-                    Logger.log('Database Connection success!', Color.blue)
+        if (process.env.APP_DB === 'true') {
+            await this.pool()
+                .then(async clients => {
+                    clients.connect((error, client) => {
+                        if (error) {
+                            throw 'Database Connection Error!'
+                        }
+                        client.release()
+                        Logger.log('Database Connection success!', Color.blue)
+                    })
                 })
-            })
+        } else {
+            Logger.log(`Database Not Used, But it's Ok!`, Color.blue)
+        }
+
     }
 
     async client(query: string) {
