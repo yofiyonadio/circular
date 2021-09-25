@@ -1,5 +1,6 @@
 import VueCookie from 'vue-cookie';
 import jwt from "jsonwebtoken";
+import { env } from '..'
 
 const secret = '$2a$12$ff.6epJcAXTsb28fNM.F1.DMeV9n/U8uWpsr.pGEmsnAY8y/hzZ5S'
 
@@ -7,17 +8,17 @@ class Middleware {
 
     auth(to, from, next, routeName) {
         if (to.query.token) {
-            jwt.verify(to.query.token, secret, function (err, decoded) {
+            jwt.verify(to.query.token, env.SECRET, (err, decoded) => {
                 if (err) {
                     next({ name: routeName })
                 } else {
                     VueCookie.set('token', to.query.token, {
                         expires: false,
                     })
-                    VueCookie.set('user', decoded, {
+                    VueCookie.set('user', JSON.stringify(decoded), {
                         expires: false,
                     })
-                    window.location.replace(window.location.origin);
+                    window.location.replace(env.APP_ORIGIN);
                 }
             })
         }
@@ -25,7 +26,7 @@ class Middleware {
         const token = VueCookie.get('token')
 
         if (token) {
-            jwt.verify(token, secret, function (err, decoded) {
+            jwt.verify(token, env.SECRET, (err, decoded) => {
                 if (err) {
                     next({ name: routeName })
                 } else {
@@ -39,7 +40,7 @@ class Middleware {
 
     authBack(to, from, next, routeName) {
         var token = VueCookie.get('token')
-        jwt.verify(token, secret, function (err, decoded) {
+        jwt.verify(token, env.SECRET, (err, decoded) => {
             if (err) {
                 next()
             } else {
@@ -49,22 +50,17 @@ class Middleware {
     }
 
     verify(to, from, next) {
-
+        console.log(VueCookie.get('user'))
         if (to.path === '/google') {
-
             const token = VueCookie.get('token')
-
             if (token) {
                 next({ name: 'Home' })
             } else {
-                location.href = window.location.origin + '/api/auth/google'
+                location.href = env.API_ORIGIN + '/api/auth/google'
             }
-
-            
         }
 
         const auth = to.matched.some(record => record.meta.auth)
-
         if (auth) {
             this.auth(to, from, next, 'Login')
         } else {
@@ -74,6 +70,7 @@ class Middleware {
                 next()
             }
         }
+
     }
 }
 
