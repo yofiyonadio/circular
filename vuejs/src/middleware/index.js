@@ -51,6 +51,7 @@ class Middleware {
     }
 
     verify(to, from, next) {
+        console.log(env.APP_ORIGIN)
         console.log(VueCookie.get('user'))
         if (to.path === '/google') {
             const token = VueCookie.get('token')
