@@ -1,0 +1,17 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const helper_1 = __importDefault(require("../helper"));
+const __1 = require("../../");
+class NotFound extends helper_1.default {
+    default(app, path) {
+        this.routing(app, path).get(__1.Controller.NotFound.default);
+        this.routing(app, path).post(__1.Controller.NotFound.default);
+        this.routing(app, path).put(__1.Controller.NotFound.default);
+        this.routing(app, path).delete(__1.Controller.NotFound.default);
+        this.routing(app, path).patch(__1.Controller.NotFound.default);
+    }
+}
+exports.default = new NotFound();
