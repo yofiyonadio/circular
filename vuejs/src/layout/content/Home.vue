@@ -32,9 +32,20 @@
         </div>
       </div>
     </div>
+    <div class="logout" v-on:click="signout()">
+      <div class="logout-left">
+        <a>Sign Out</a>
+      </div>
+      <div class="logout-right center-parrent">
+        <img src="../../assets/logout2.svg" alt="sigout" class="center-child" />
+      </div>
+    </div>
   </div>
 </template>
 <script>
+import VueCookie from 'vue-cookie';
+import { router } from '../..'
+
 export default {
   name: "App",
   components: {},
@@ -42,7 +53,13 @@ export default {
     return {};
   },
   mounted: function () {},
-  methods: {},
+  methods: {
+    signout: () => {
+       VueCookie.delete('token');
+       VueCookie.delete('user');
+       router.push({ name: 'Login' })
+    }
+  },
 };
 </script>
 <style scoped>
@@ -143,6 +160,38 @@ a {
 .btn-left img {
   height: 40px;
   width: 40px;
+}
+
+.logout {
+  position: fixed;
+  height: 50px;
+  width: 150px;
+  top: 0;
+  right: 0;
+  margin: 5px;
+  display: flex;
+  cursor: pointer;
+}
+
+.logout-left {
+  height: inherit;
+  width: calc(100% - 50px);
+  display: inline-flex;
+  justify-content: center;
+  font-size: 18px;
+}
+
+.logout-left a {
+  align-self: center;
+}
+
+.logout-right {
+  height: inherit;
+  width: 50px;
+}
+
+.logout-right img {
+  height: 30px;
 }
 
 .center-parrent {
