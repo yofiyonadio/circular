@@ -11,7 +11,9 @@ class Routes {
         Route.Google.success(app, '/auth/google/success')
         Route.Google.error(app, '/auth/google/error')
         Route.Google.callback(app, '/auth/google/callback')
-        
+
+        Route.Guest.auth(app, '/auth/guest')
+
         Route.NotFound.default(app, '*')
 
     }
