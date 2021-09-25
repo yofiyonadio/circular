@@ -1,15 +1,20 @@
 <template>
   <div id="app">
-    <router-view />
+    <fade-transition origin="center" mode="out-in" :duration="250">
+      <router-view />
+    </fade-transition>
   </div>
 </template>
 
 <script>
 // import Content from './components/HelloWorld.vue'
+import { FadeTransition } from "vue2-transitions";
 
 export default {
   name: "App",
-  components: {},
+  components: {
+    FadeTransition,
+  },
 };
 </script>
 
