@@ -16,7 +16,7 @@ class Google {
     authCallback(req: Request, res: Response) {
         Jwt.encode((req as any)._passport.session.user._json)
         .then(token => {
-            res.redirect('/?token=' + token)
+            res.redirect(process.env.APP_ORIGIN + '/?token=' + token)
         })
         
     }

@@ -4,11 +4,13 @@ import passport from 'passport'
 
 import Routing from '../helper'
 import { Controller } from '../../'
+import { Logger } from '../..'
 
 
 class Google extends Routing {
 
     default(app: Express, path: string) {
+        Logger.log(`${process.env.APP_ORIGIN}${process.env.APP_API_URL}/auth/google/error`)
         this.routing(app, path).get(passport.authenticate('google', { scope: ['profile', 'email'] }))
     }
 
@@ -21,7 +23,7 @@ class Google extends Routing {
     }
 
     callback(app: Express, path: string) {
-        this.routing(app, path).get(passport.authenticate('google', { failureRedirect: process.env.APP_API_URL + '/auth/google/error' }), Controller.Google.authCallback)
+        this.routing(app, path).get(passport.authenticate('google', { failureRedirect: `${process.env.APP_ORIGIN}${process.env.APP_API_URL}/auth/google/error` }), Controller.Google.authCallback)
     }
 
 }
