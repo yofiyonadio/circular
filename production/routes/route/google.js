@@ -6,10 +6,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const passport_1 = __importDefault(require("passport"));
 const helper_1 = __importDefault(require("../helper"));
 const __1 = require("../../");
-const __2 = require("../..");
 class Google extends helper_1.default {
     default(app, path) {
-        __2.Logger.log(`${process.env.APP_ORIGIN}${process.env.APP_API_URL}/auth/google/error`);
         this.routing(app, path).get(passport_1.default.authenticate('google', { scope: ['profile', 'email'] }));
     }
     success(app, path) {
