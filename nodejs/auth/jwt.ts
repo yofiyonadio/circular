@@ -2,9 +2,9 @@ import jwt from 'jsonwebtoken'
 
 class Jwt {
 
-    encode(key: string) {
+    encode(key: any) {
         return new Promise((resolve, reject) => {
-            jwt.sign({ code: key }, process.env.JWT_SECRET as string, {}, (error, token) => {
+            jwt.sign(key, process.env.JWT_SECRET as string, {}, (error, token) => {
                 if (error) {
                     reject(error)
                 }
