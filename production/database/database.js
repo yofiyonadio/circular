@@ -25,16 +25,21 @@ class Database {
     }
     init() {
         return __awaiter(this, void 0, void 0, function* () {
-            yield this.pool()
-                .then((clients) => __awaiter(this, void 0, void 0, function* () {
-                clients.connect((error, client) => {
-                    if (error) {
-                        throw 'Database Connection Error!';
-                    }
-                    client.release();
-                    __1.Logger.log('Database Connection success!', __1.Color.blue);
-                });
-            }));
+            if (process.env.APP_DB === 'true') {
+                yield this.pool()
+                    .then((clients) => __awaiter(this, void 0, void 0, function* () {
+                    clients.connect((error, client) => {
+                        if (error) {
+                            throw 'Database Connection Error!';
+                        }
+                        client.release();
+                        __1.Logger.log('Database Connection success!', __1.Color.blue);
+                    });
+                }));
+            }
+            else {
+                __1.Logger.log(`Database Not Used, But it's Ok!`, __1.Color.blue);
+            }
         });
     }
     client(query) {
