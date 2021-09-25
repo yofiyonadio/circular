@@ -18,6 +18,7 @@ class Middleware {
                     VueCookie.set('user', JSON.stringify(decoded), {
                         expires: false,
                     })
+                    console.log(env.APP_ORIGIN)
                     window.location.replace(env.APP_ORIGIN);
                 }
             })
