@@ -34,7 +34,7 @@
                   class="center-child"
                 />
               </div>
-              <div class="btn-rigth">
+              <div class="btn-rigth" v-on:click="authGuest()">
                 <a>Login as Guest</a>
               </div>
             </div>
@@ -46,8 +46,10 @@
   </div>
 </template>
 <script>
-//import Axios from "../../helper/axios";
-import { router } from '../..'
+import jwt from "jsonwebtoken";
+import VueCookie from 'vue-cookie';
+import Axios from "../../helper/axios";
+import { router, env } from "../..";
 
 export default {
   name: "App",
@@ -58,16 +60,29 @@ export default {
   mounted: function () {},
   methods: {
     authGoogle: () => {
-      router.push({ name: 'Google' })
-      /*
-      Axios.get('http://localhost:3000/api/auth/google', "tes")
-      .then(res => {
-        console.log(res);
-      })
-      .catch(err => {
-        console.log(err);
-      })
-      */
+      router.push({ name: "Google" });
+    },
+    authGuest: () => {
+      Axios.get(env.API_ORIGIN + "/api/auth/guest", "")
+        .then((res) => {
+          const token = res.data.datas.token
+          jwt.verify(token, env.SECRET, (err, decoded) => {
+            if (err) {
+              alert(err);
+            } else {
+              VueCookie.set("token", token, {
+                expires: false,
+              });
+              VueCookie.set("user", JSON.stringify(decoded), {
+                expires: false,
+              });
+              router.push({ name: "Home" });
+            }
+          });
+        })
+        .catch((err) => {
+          alert(err);
+        });
     },
   },
 };
