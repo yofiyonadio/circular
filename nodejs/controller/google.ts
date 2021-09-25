@@ -1,8 +1,9 @@
 import { Response, Request } from 'express'
 
-import { Responser, Logger } from '..'
+import { Responser, Logger, Jwt } from '..'
 
 class Google {
+    
 
     authSuccess(req: Request, res: Response) {
         Responser.good('Auth Google Success', res)
@@ -13,8 +14,11 @@ class Google {
     }
 
     authCallback(req: Request, res: Response) {
-        // Logger.log((req as any)._passport.session.user._json)
-        res.redirect(process.env.APP_API_URL + '/auth/google/success')
+        Jwt.encode((req as any)._passport.session.user._json)
+        .then(token => {
+            res.redirect('/?token=' + token)
+        })
+        
     }
 
 
