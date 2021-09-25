@@ -22,7 +22,7 @@
                   class="center-child"
                 />
               </div>
-              <div class="btn-rigth">
+              <div class="btn-rigth" v-on:click="authGoogle()">
                 <a>Login with Google</a>
               </div>
             </div>
@@ -46,6 +46,9 @@
   </div>
 </template>
 <script>
+//import Axios from "../../helper/axios";
+import { router } from '../..'
+
 export default {
   name: "App",
   components: {},
@@ -53,7 +56,20 @@ export default {
     return {};
   },
   mounted: function () {},
-  methods: {},
+  methods: {
+    authGoogle: () => {
+      router.push({ name: 'Google' })
+      /*
+      Axios.get('http://localhost:3000/api/auth/google', "tes")
+      .then(res => {
+        console.log(res);
+      })
+      .catch(err => {
+        console.log(err);
+      })
+      */
+    },
+  },
 };
 </script>
 <style scoped>
