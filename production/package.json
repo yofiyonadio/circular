@@ -6,7 +6,8 @@
   "scripts": {
     "serve": "nodemon server.ts",
     "build": "tsc --build --clean && tsc --project ./",
-    "build:prod": "tsc --build --clean && tsc --project ./ && gulp && cd ../vuejs && npx vue-cli-service build --dest ../production/public",
+    "build:prod": "tsc --build --clean && tsc --project ./ && gulp prod && cd ../vuejs && npx vue-cli-service build --dest ../production/public",
+    "build:server": "tsc --build --clean && tsc --project ./ && gulp server && cd ../vuejs && npx vue-cli-service build --dest ../production/public",
     "clean": "tsc --build --clean ./",
     "test": "echo \"Error: no test specified\" && exit 1",
     "tslint": "tslint --project tsconfig.json"
