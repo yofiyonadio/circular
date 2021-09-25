@@ -1,5 +1,6 @@
 import express from 'express'
 import { config } from 'dotenv'
+import cors from 'cors'
 
 import { Routes, Database, Logger, Color, Oauth2 } from '.'
 
@@ -11,6 +12,11 @@ const port = process.env.APP_PORT
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 app.use(express.static(__dirname + '/public'))
+
+app.use(cors({
+  origin: '*',
+  optionsSuccessStatus: 200,
+}))
 
 Oauth2.passport(app)
 Routes.route(app)
