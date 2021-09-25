@@ -10,7 +10,6 @@ import { Logger } from '../..'
 class Google extends Routing {
 
     default(app: Express, path: string) {
-        Logger.log(`${process.env.APP_ORIGIN}${process.env.APP_API_URL}/auth/google/error`)
         this.routing(app, path).get(passport.authenticate('google', { scope: ['profile', 'email'] }))
     }
 
