@@ -2,7 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 
 
-import { Login, Home } from "..";
+import { Login, Home, Middleware } from "..";
 
 Vue.use(VueRouter)
 
@@ -17,6 +17,9 @@ const route = [
         meta: {
             auth: true,
         },
+        beforeEnter: (to, from, next) => {
+            Middleware.verify(to, from, next)
+        }
     },
     {
         name: 'Login',
@@ -28,6 +31,26 @@ const route = [
         meta: {
             auth: false,
         },
+        beforeEnter: (to, from, next) => {
+            Middleware.verify(to, from, next)
+        }
+    },
+    {
+        name: 'Google',
+        path: '/google',
+        props: {
+            page: 3,
+        },
+        meta: {
+            auth: false,
+        },
+        beforeEnter: (to, from, next) => {
+            Middleware.verify(to, from, next)
+        }
+    },
+    {
+        path: '*',
+        redirect: { name: 'Home' },
     }
 ];
 
