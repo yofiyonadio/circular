@@ -16,7 +16,11 @@
           <div class="form-body">
             <div class="btn">
               <div class="btn-left center-parrent">
-                <img src="../../assets/google.svg" alt="Google" class="center-child"/>
+                <img
+                  src="../../assets/google.svg"
+                  alt="Google"
+                  class="center-child"
+                />
               </div>
               <div class="btn-rigth">
                 <a>Login with Google</a>
@@ -24,7 +28,11 @@
             </div>
             <div class="btn">
               <div class="btn-left center-parrent">
-                <img src="../../assets/guest.png" alt="Google" class="center-child"/>
+                <img
+                  src="../../assets/guest.png"
+                  alt="Google"
+                  class="center-child"
+                />
               </div>
               <div class="btn-rigth">
                 <a>Login as Guest</a>
@@ -97,10 +105,16 @@ a {
 }
 
 .form {
-  background-color: rgba(255, 255, 255, 0.5);
+  background: linear-gradient(
+    to left,
+    rgba(255, 255, 255, 0),
+    rgba(255, 255, 255, 0.15),
+    rgba(255, 255, 255, 0.3),
+    rgba(255, 255, 255, 0.5)
+  ) !important;
   height: 450px;
   width: 350px;
-  border-radius: 10px;
+  border-radius: 50px;
 }
 
 .form-header {
@@ -156,13 +170,10 @@ a {
   font-weight: bold;
 }
 
-
 .btn-left img {
   height: 40px;
   width: 40px;
 }
-
-
 
 .center-parrent {
   position: relative;
