@@ -22,10 +22,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Jwt = exports.Oauth2 = exports.Database = exports.Routes = exports.Controller = exports.Responser = exports.Color = exports.Logger = void 0;
+exports.Axios = exports.Random = exports.Jwt = exports.Oauth2 = exports.Database = exports.Routes = exports.Controller = exports.Responser = exports.Color = exports.Logger = void 0;
 const helper_1 = require("./helper");
 Object.defineProperty(exports, "Logger", { enumerable: true, get: function () { return helper_1.Logger; } });
 Object.defineProperty(exports, "Color", { enumerable: true, get: function () { return helper_1.Color; } });
+Object.defineProperty(exports, "Random", { enumerable: true, get: function () { return helper_1.Random; } });
+Object.defineProperty(exports, "Axios", { enumerable: true, get: function () { return helper_1.Axios; } });
 const responser_1 = require("./responser");
 Object.defineProperty(exports, "Responser", { enumerable: true, get: function () { return responser_1.Responser; } });
 const Controller = __importStar(require("./controller"));

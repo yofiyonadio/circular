@@ -9,6 +9,7 @@ class Routes {
         _1.Route.Google.error(app, '/auth/google/error');
         _1.Route.Google.callback(app, '/auth/google/callback');
         _1.Route.Guest.auth(app, '/auth/guest');
+        _1.Route.Pokemon.random(app, '/pokemon');
         _1.Route.NotFound.default(app, '*');
     }
 }
