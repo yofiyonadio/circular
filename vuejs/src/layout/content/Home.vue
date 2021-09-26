@@ -4,27 +4,77 @@
       <div class="box-left">
         <div class="lottie">
           <lottie-player
+            id="lottie-pockemon"
             src="https://assets4.lottiefiles.com/packages/lf20_jkdbuk2i.json"
             background="transparent"
             speed="2"
-            style="width: 300px; height: 300px"
+            style="width: 250px; height: 250px"
             loop
-            autoplay
           ></lottie-player>
+        </div>
+        <div class="pockemon hide">
+          <div class="pockemon-img">
+            <div>
+              <div class="left">
+                <div class="pockemon-image top">
+                  <img id="front_default" src="../../assets/logout2.svg" />
+                </div>
+              </div>
+              <div class="right">
+                <div class="pockemon-image top">
+                  <img id="front_shiny" src="../../assets/logout2.svg" />
+                </div>
+              </div>
+            </div>
+            <div>
+              <div class="left">
+                <div class="pockemon-image bottom">
+                  <img id="back_default" src="../../assets/logout2.svg" />
+                </div>
+              </div>
+              <div class="right">
+                <div class="pockemon-image bottom">
+                  <img id="back_shiny" src="../../assets/logout2.svg" />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="pockemon-stat">
+            <div>
+              <a class="title">Name :</a>
+              <br />
+              <a id="name" class="text"></a>
+            </div>
+            <div>
+              <a class="title">Type :</a>
+              <br />
+              <a id="type" class="text"></a>
+            </div>
+            <div>
+              <a class="title">Url :</a>
+              <br />
+              <a
+                href="https://www.w3schools.com/"
+                target="_blank"
+                id="url"
+                class="text"
+              ></a>
+            </div>
+          </div>
         </div>
       </div>
       <div class="box-right center-parrent">
         <div class="form center-child">
           <div class="form-body">
             <div class="btn">
-              <div class="btn-left center-parrent">
+              <div class="btn-left center-parrent" v-on:click="random()">
                 <img
                   src="../../assets/random.png"
                   alt="Google"
                   class="center-child"
                 />
               </div>
-              <div class="btn-rigth">
+              <div class="btn-rigth" v-on:click="random()">
                 <a>Random Pockemon</a>
               </div>
             </div>
@@ -43,8 +93,9 @@
   </div>
 </template>
 <script>
-import VueCookie from 'vue-cookie';
-import { router } from '../..'
+import VueCookie from "vue-cookie";
+import Axios from "../../helper/axios";
+import { router, env } from "../..";
 
 export default {
   name: "App",
@@ -54,11 +105,84 @@ export default {
   },
   mounted: function () {},
   methods: {
-    signout: () => {
-       VueCookie.delete('token');
-       VueCookie.delete('user');
-       router.push({ name: 'Login' })
-    }
+    signout: function () {
+      VueCookie.delete("token");
+      VueCookie.delete("user");
+      router.push({ name: "Login" });
+    },
+    getPokemon: function () {
+      Axios.get(env.API_ORIGIN + "/api/pokemon", "")
+        .then((datas) => {
+          const data = datas.data.datas;
+          this.setPokemonStat(
+            data.pokemon.name,
+            data.pokemon.url,
+            data.types[0].type.name
+          );
+          this.setPokemonImage(data.sprites);
+          this.lottieStop();
+          this.lottieHide();
+          this.pokemonShow();
+        })
+        .catch((error) => {
+          this.lottieStop();
+          alert(error);
+        });
+    },
+    setPokemonStat: function (names, urls, types) {
+      const name = document.querySelector("#name");
+      const url = document.querySelector("#url");
+      const type = document.querySelector("#type");
+      name.innerHTML = names;
+      url.innerHTML = urls;
+      url.href = urls;
+      type.innerHTML = types;
+    },
+    setPokemonImage: function (image) {
+      const front_default = document.querySelector("#front_default");
+      const front_shiny = document.querySelector("#front_shiny");
+      const back_default = document.querySelector("#back_default");
+      const back_shiny = document.querySelector("#back_shiny");
+      front_default.src = image.front_default;
+      front_shiny.src = image.front_shiny;
+      back_default.src = image.back_default;
+      back_shiny.src = image.back_shiny;
+    },
+    lottiePlay: function () {
+      const lottie = document.querySelector("#lottie-pockemon");
+      lottie.play();
+    },
+    lottieStop: function () {
+      const lottie = document.querySelector("#lottie-pockemon");
+      lottie.stop();
+    },
+    lottieHide: function () {
+      const lotties = document.querySelector(".lottie");
+      lotties.classList.remove("show");
+      lotties.classList.add("hide");
+    },
+    lottieShow: function () {
+      const lotties = document.querySelector(".lottie");
+      lotties.classList.remove("hide");
+      lotties.classList.add("show");
+    },
+    pokemonHide: function () {
+      const pokemon = document.querySelector(".pockemon");
+      pokemon.classList.remove("flex");
+      pokemon.classList.add("hide");
+    },
+    pokemonShow: function () {
+      const pokemon = document.querySelector(".pockemon");
+      pokemon.classList.remove("hide");
+      pokemon.classList.add("flex");
+    },
+
+    random: function () {
+      this.lottiePlay();
+      this.pokemonHide();
+      this.lottieShow();
+      this.getPokemon();
+    },
   },
 };
 </script>
@@ -108,6 +232,103 @@ a {
   height: inherit;
   width: 50%;
   position: relative;
+}
+
+.pockemon {
+  height: 450px;
+  width: 600px;
+  display: flex;
+}
+
+.pockemon-img {
+  width: 50%;
+  height: inherit;
+}
+
+.pockemon-img > div {
+  width: 100%;
+  height: 50%;
+  display: flex;
+}
+
+.pockemon-img > div > div {
+  width: 50%;
+  height: 100%;
+  display: flex;
+}
+
+.pockemon-img > div > .left {
+  justify-content: end;
+}
+
+.pockemon-img > div > .right {
+  justify-content: start;
+}
+
+.pockemon-img > div > div > .top {
+  align-self: flex-end;
+}
+
+.pockemon-img > div > div > .bottom {
+  align-self: flex-start;
+}
+
+.pockemon-image {
+  background-color: lavenderblush;
+  height: 100px;
+  width: 100px;
+  margin: 10px;
+}
+
+.pockemon-image > img {
+  height: inherit;
+  width: inherit;
+}
+
+.pockemon-stat {
+  width: 50%;
+  height: inherit;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+.pockemon-stat div {
+  align-self: flex-start;
+}
+
+.title {
+  font-size: 20px !important;
+}
+
+.text {
+  font-size: 25px !important;
+}
+
+#name {
+  font-weight: bold;
+}
+
+#url {
+  font-size: 20px !important;
+}
+
+
+.lottie {
+}
+
+/***-----------------------------------------------------------------***/
+
+.hide {
+  display: none;
+}
+
+.show {
+  display: block;
+}
+
+.flex {
+  display: flex;
 }
 
 .form {
