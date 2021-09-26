@@ -1,4 +1,4 @@
-import { Logger, Color } from './helper'
+import { Logger, Color, Random } from './helper'
 import { Responser } from './responser'
 import * as Controller from './controller'
 import { Routes } from './routes'
@@ -14,4 +14,5 @@ export {
     Database,
     Oauth2,
     Jwt,
+    Random,
 }
