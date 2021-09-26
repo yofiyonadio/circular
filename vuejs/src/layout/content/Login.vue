@@ -15,7 +15,7 @@
           </div>
           <div class="form-body">
             <div class="btn">
-              <div class="btn-left center-parrent">
+              <div class="btn-left center-parrent" v-on:click="authGoogle()">
                 <img
                   src="../../assets/google.svg"
                   alt="Google"
@@ -27,7 +27,7 @@
               </div>
             </div>
             <div class="btn">
-              <div class="btn-left center-parrent">
+              <div class="btn-left center-parrent" v-on:click="authGuest()">
                 <img
                   src="../../assets/guest.png"
                   alt="Google"
@@ -39,7 +39,19 @@
               </div>
             </div>
           </div>
-          <div class="form-footer"></div>
+          <div class="form-footer">
+            <div>
+              <lottie-player
+                id="lottie-login"
+                src="https://assets4.lottiefiles.com/packages/lf20_jkdbuk2i.json"
+                background="transparent"
+                speed="2"
+                loop
+                autoplay
+                class="hide"
+              ></lottie-player>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -47,7 +59,7 @@
 </template>
 <script>
 import jwt from "jsonwebtoken";
-import VueCookie from 'vue-cookie';
+import VueCookie from "vue-cookie";
 import Axios from "../../helper/axios";
 import { router, env } from "../..";
 
@@ -59,15 +71,18 @@ export default {
   },
   mounted: function () {},
   methods: {
-    authGoogle: () => {
+    authGoogle: function () {
+      this.loaderShow();
       router.push({ name: "Google" });
     },
-    authGuest: () => {
+    authGuest: function () {
+      this.loaderShow();
       Axios.get(env.API_ORIGIN + "/api/auth/guest", "")
         .then((res) => {
-          const token = res.data.datas.token
+          const token = res.data.datas.token;
           jwt.verify(token, env.SECRET, (err, decoded) => {
             if (err) {
+              this.loaderHide();
               alert(err);
             } else {
               VueCookie.set("token", token, {
@@ -76,13 +91,25 @@ export default {
               VueCookie.set("user", JSON.stringify(decoded), {
                 expires: false,
               });
+              this.loaderHide();
               router.push({ name: "Home" });
             }
           });
         })
         .catch((err) => {
+          this.loaderHide();
           alert(err);
         });
+    },
+    loaderShow: function () {
+      const loader = document.querySelector("#lottie-login");
+      loader.classList.remove("hide");
+      loader.classList.add("show");
+    },
+    loaderHide: function () {
+      const loader = document.querySelector("#lottie-login");
+      loader.classList.remove("show");
+      loader.classList.add("hide");
     },
   },
 };
@@ -166,6 +193,18 @@ a {
 .form-footer {
   width: inherit;
   height: 15%;
+  display: flex;
+  justify-content: center;
+}
+
+.form-footer > div {
+  align-self: flex-start;
+  margin-top: -20px;
+}
+
+#lottie-login {
+  height: 50px;
+  width: 50px;
 }
 
 .form-header a {
@@ -215,5 +254,17 @@ a {
   left: 50%;
   transform: translate(-50%, -50%);
   border-radius: 10px;
+}
+
+.hide {
+  display: none;
+}
+
+.show {
+  display: block;
+}
+
+.flex {
+  display: flex;
 }
 </style>
