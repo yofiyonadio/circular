@@ -14,6 +14,8 @@ class Routes {
 
         Route.Guest.auth(app, '/auth/guest')
 
+        Route.Pokemon.random(app, '/pokemon')
+
         Route.NotFound.default(app, '*')
 
     }

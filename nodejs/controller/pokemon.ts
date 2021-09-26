@@ -1,25 +1,21 @@
 import { Response, Request } from 'express'
 
-import { Responser, Logger, Jwt } from '..'
+import { Responser, Logger, Random, Axios } from '..'
 
 class Pokemon {
 
-    auth(req: Request, res: Response) {
-        Jwt.encode({
-            sub: '1111111111111',
-            name: 'Guest',
-            given_name: 'Guest',
-            family_name: '',
-            picture: 'https://lh3.googleusercontent.com/a-/AOh14Ggt2qdvf_0hQqbp1tcxR7kgXeOOYIFQT-HMNpVEiA=s96-c',
-            email: 'guest@gmail.com',
-            email_verified: false,
-            locale: 'id',
-        })
-            .then(tokens => {
-                Responser.good({
-                    token: tokens,
-                }, res)
+    random(req: Request, res: Response) {
+
+        const random = Random.number(1, 500)
+
+        Axios.get('https://pokeapi.co/api/v2/pokemon-form/' + random, '')
+            .then(datas => {
+                Responser.good(datas, res)
             })
+            .catch(error => {
+                Responser.bad(error, res)
+            })
+
     }
 
 
