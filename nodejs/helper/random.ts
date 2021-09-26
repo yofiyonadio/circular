@@ -1,8 +1,7 @@
-import randomInt from 'random-int'
-
+import random from 'random'
 class Random {
     number(start: number, end: number) {
-        return randomInt(start, end)
+        return random.int(start, end)
     }
 }
 
