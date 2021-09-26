@@ -4,7 +4,7 @@ You can see this project result on https://ee46-103-82-240-145.ngrok.io as long 
 
 # To Run this Project
 - git clone https://github.com/yofiyonadio/circular.git
-- cd circular\production
+- cd circular/production
 - npm install
 - node server.js
 - Server will run at http://localhost:3000
@@ -12,7 +12,7 @@ You can see this project result on https://ee46-103-82-240-145.ngrok.io as long 
 
 # To Build this Project
 - git clone https://github.com/yofiyonadio/circular.git
-- cd circular\vuejs
+- cd circular/vuejs
 - npm install
 - cd ../nodejs
 - npm install
